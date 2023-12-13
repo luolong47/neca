@@ -30,5 +30,10 @@ jobs:
       - name: CMake configure
         run: cmake ./
 
+      - name: test
+        run: |
+          pwd
+          ls -lh
+
       - name: Run neca
         run: ./neca ${{ github.event.inputs.myArg }}
