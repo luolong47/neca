@@ -1,0 +1,37 @@
+name: Manual build and execute with parameters
+
+on:
+  workflow_dispatch:
+    inputs:
+      myArg:
+        description: 'Input for the neca command'
+        required: true
+        default: 'default-value'
+
+jobs:
+  build-and-run:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+      
+      - name: Install dependencies
+        run: |
+          sudo apt update
+          sudo apt install -y build-essential cmake libgmp-dev # 添加其他依赖
+
+      - name: Create build directory
+        run: mkdir build
+
+      - name: Change to build directory
+        run: cd build
+
+      - name: CMake configure
+        run: cmake ../src/
+
+      - name: CMake build
+        run: cmake --build .
+
+      - name: Run neca
+        run: ./neca ${{ github.event.inputs.myArg }}
