@@ -21,19 +21,12 @@ jobs:
           sudo apt update
           sudo apt install -y build-essential cmake libgmp-dev # 添加其他依赖
 
-      - name: Create build directory
-        run: mkdir build
-
-      - name: Change to build directory
-        run: cd build
-
-      - name: CMake configure
-        run: cmake ./
-
-      - name: test
+      - name: 构建
         run: |
+          cmake .
+          make
           pwd
           ls -lh
-
+          
       - name: Run neca
         run: ./neca ${{ github.event.inputs.myArg }}
